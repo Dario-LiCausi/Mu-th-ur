@@ -7,3 +7,4 @@
 6. **Scanned books have no text.** A search index looked complete but half the files were images. Fix: report "needs OCR" instead of "indexed", then run OCR in a locked container.
 7. **Names that leak.** A public repo build must scrub internal host names, drive IDs and personal names. Fix: an automated scan that fails the build.
 8. **Ask, then act, with limits.** Delegated work got a cost cap, a time limit and an undo line each time.
+9. **A `chmod` on a mount point does nothing once something is mounted there.** The writable archive mount was reachable by every local user because the drive's own permissions applied. An automated review of the commit found it. Fix: mount inside a root-only parent folder. Lesson: test the guarantee (can a normal user write?), do not trust the intent. Also: do not test a protection by writing to the protected data.
