@@ -1,0 +1,13 @@
+# brain-library: text extraction for books and documents (no network needed at run time).
+# Built on the vetted video image. Adds pypdf (hash-pinned wheel), djvulibre, tesseract OCR (eng, chi_sim) and poppler (Debian).
+FROM brain-worker:1
+USER root
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends djvulibre-bin tesseract-ocr tesseract-ocr-eng tesseract-ocr-chi-sim poppler-utils \
+ && rm -rf /var/lib/apt/lists/*
+COPY requirements-library.txt /app/requirements-library.txt
+RUN pip install --no-cache-dir --require-hashes --only-binary=:all: -r /app/requirements-library.txt
+USER worker
+WORKDIR /out
+# Run flags: --network none --read-only --cap-drop ALL --security-opt no-new-privileges --pids-limit 128
+#   --memory 3g --cpus 2 --tmpfs /tmp:size=512m -v <code>:/app/run:ro -v <inbox>:/in:ro -v <workdir>:/out

@@ -17,6 +17,7 @@ Everything here is documentation and sanitised example scripts. No secrets, addr
 | Vetting workflow | How third-party code is checked by several agents before anything is installed | `docs/vetting-workflow.md` |
 | Lessons learned | Real mistakes and how they were fixed | `docs/lessons-learned.md` |
 | Example scripts | Health check, layered read-only mount, vetting scan, a controlled door to a file server | `scripts/` |
+| **Second brain** | A Telegram-first assistant: nudges, video notes, a searchable library (77 tests) | `second-brain/` |
 
 ## Design principles
 1. **Humans approve what matters.** Installs, deletions, publishing and anything irreversible need a yes.
@@ -26,7 +27,7 @@ Everything here is documentation and sanitised example scripts. No secrets, addr
 5. **Everything is logged and reversible.** Every change has a backup and an undo line.
 
 ## Related
-The ADHD "second brain" (Telegram inbox, nudges, video notes, a searchable library) is a separate project.
+The small local-model helper with approval-based memory is a separate repo: [flora](https://github.com/Dario-LiCausi/flora).
 
 ## Licence
 MIT. See `LICENSE`.

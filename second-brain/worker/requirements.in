@@ -1,0 +1,5 @@
+# av<17: faster-whisper 1.2.1 passes metadata_errors, which av 17+ removed (found in the live Instagram test 2026-11-17)
+yt-dlp
+youtube-transcript-api
+faster-whisper
+av<17

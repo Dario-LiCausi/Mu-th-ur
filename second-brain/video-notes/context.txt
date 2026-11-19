@@ -1,0 +1,6 @@
+ACME-HOME is a private home-server system for one owner.
+- A small server runs Docker services (files, photos, passwords, a local LLM) behind a private VPN mesh.
+- A team of AI agents plans, builds and reviews changes. Third-party code is cloned, scanned and reviewed before any install.
+- Interface: one Telegram bot. Inbox notes, daily nudges, video notes from shared links, a library of books.
+- Rules: self-hosted and free first; no secrets in prompts; the owner approves every install.
+(This file is context for the AI critique of videos about AI. Replace it with a short description of YOUR system.)
