@@ -16,7 +16,7 @@ Everything here is documentation and sanitised example scripts. No secrets, addr
 | Security model | Least privilege, approval codes, read-only data layers, vet-before-install | `docs/security-model.md` |
 | Vetting workflow | How third-party code is checked by several agents before anything is installed | `docs/vetting-workflow.md` |
 | Lessons learned | Real mistakes and how they were fixed | `docs/lessons-learned.md` |
-| Example scripts | Health check, layered read-only mount, vetting scan, a controlled door to a file server | `scripts/` |
+| Example scripts | Health check, layered read-only mount, vetting scan, hook and skill scanners, a controlled door to a file server | `scripts/` |
 | **Second brain** | A Telegram-first assistant: nudges, video notes, a searchable library (77 tests) | `second-brain/` |
 
 ## Design principles
