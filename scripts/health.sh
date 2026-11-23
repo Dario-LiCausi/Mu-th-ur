@@ -7,6 +7,17 @@ last() { for f in "$L/$1.log" "$L/$1.log.1"; do [ -s "$f" ] && { tail -1 "$f"; r
 # Backup age from the epoch file written by backup.sh (new version).
 ok=$(cat "$L/backup.last-ok" 2>/dev/null)
 if [[ "$ok" =~ ^[0-9]+$ ]]; then days=$(( ($(date +%s) - ok) / 86400 )); else days=""; fi
+# Fallback: no last-ok file yet (the new backup script is not installed). If the newest backup log ends with the
+# restic success line ("snapshot ... saved"), use that log's time as the backup time. An error line keeps the alert.
+src=""
+if [ -z "$days" ]; then
+  for f in "$L/backup.log" "$L/backup.log.1"; do
+    if [ -s "$f" ] && tail -1 "$f" 2>/dev/null | grep -qE '^snapshot [0-9a-f]+ saved'; then
+      t=$(stat -c %Y "$f" 2>/dev/null); [[ "$t" =~ ^[0-9]+$ ]] && { days=$(( ($(date +%s) - t) / 86400 )); src=" (from backup log time)"; }
+      break
+    fi
+  done
+fi
 ls "$BACKUP_MOUNT" >/dev/null 2>&1   # trigger the automount
 bk=$([ "$(findmnt -n -t ext4 -o UUID "$BACKUP_MOUNT" 2>/dev/null)" = "$BACKUP_UUID" ] && echo yes || echo NO)
 {
@@ -14,7 +25,7 @@ echo "# Server health $(date '+%Y-%m-%d %H:%M')"
 [ -z "$days" ] && echo "ALERT backup age unknown (no last-ok record)"
 [ -n "$days" ] && [ "$days" -ge 2 ] && echo "ALERT backup $days days old"
 [ "$bk" = NO ] && echo "ALERT backup drive not connected"
-echo "- backup status: $(cat "$L/backup.status" 2>/dev/null || echo 'no status file') (last OK: ${days:-?} days ago)"
+echo "- backup status: $(cat "$L/backup.status" 2>/dev/null || echo 'no status file') (last OK: ${days:-?} days ago${src})"
 echo "- restic backup log: $(last backup | cut -c1-140)"
 echo "- vaultwarden backup: $(last backup-vaultwarden | cut -c1-140)"
 echo "- backup drive mounted: $bk"
